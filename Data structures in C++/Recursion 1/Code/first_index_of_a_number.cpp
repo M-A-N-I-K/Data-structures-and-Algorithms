@@ -34,12 +34,21 @@ int firstIndex(int *input, int n, int x)
     {
         return -1;
     }
-    int smallerOutput = firstIndex(input + 1, n - 1, x);
     if (input[0] == x)
     {
         return 0;
     }
-    return smallerOutput;
+    else
+    {
+
+        int smallerOutput = firstIndex(input + 1, n - 1, x);
+        if (smallerOutput == -1)
+        {
+            return -1;
+        }
+        else
+            return smallerOutput + 1;
+    }
 }
 
 int main()
