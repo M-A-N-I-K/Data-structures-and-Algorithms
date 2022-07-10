@@ -1,23 +1,27 @@
 #include <iostream>
 using namespace std;
 
-void print(int n)
+class Student
 {
-    if (n < 0)
+public:
+    char name;
+    int rollNo;
+
+    Student(int num)
     {
-        return;
+        rollNo = num;
     }
-    if (n == 0)
+
+    void print()
     {
-        cout << n << " ";
-        return;
+        cout << name << " " << rollNo;
     }
-    print(n--);
-    cout << n << " ";
-}
+};
 
 int main()
 {
-    int num = 3;
-    print(num);
+    Student *s = new Student();
+    s->name = 'A';
+    s->rollNo = 15;
+    s->print();
 }
