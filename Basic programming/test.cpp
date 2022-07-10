@@ -4,24 +4,18 @@ using namespace std;
 class Student
 {
 public:
-    char name;
-    int rollNo;
-
-    Student(int num)
-    {
-        rollNo = num;
-    }
-
-    void print()
-    {
-        cout << name << " " << rollNo;
-    }
+    int rollNumber;
+    int age;
 };
 
 int main()
 {
-    Student *s = new Student();
-    s->name = 'A';
-    s->rollNo = 15;
-    s->print();
+    Student s1;
+
+    Student const s2 = s1;
+
+    s1.rollNumber = 101;
+    s1.age = 20;
+
+    cout << s2.rollNumber << " " << s2.age;
 }
