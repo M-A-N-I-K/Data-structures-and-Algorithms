@@ -72,12 +72,12 @@ public:
     {
         cout << real << " + i" << imaginary << endl;
     }
-    void plus(ComplexNumbers c1)
+    void plus(ComplexNumbers const &c1)
     {
         real = real + c1.real;
         imaginary = imaginary + c1.imaginary;
     }
-    void multiply(ComplexNumbers c1)
+    void multiply(ComplexNumbers const &c1)
     {
         int temp1 = real;
         int temp2 = imaginary;
