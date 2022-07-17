@@ -7,6 +7,16 @@ public:
     int rollNumber;
     int age;
     static int totalStudents; // Total number of students
+
+    student()
+    {
+        totalStudents++;
+    }
+
+    static int getTotalStudents()
+    {
+        return totalStudents;
+    }
 };
 
 int student ::totalStudents = 0; // Initializing static data members
