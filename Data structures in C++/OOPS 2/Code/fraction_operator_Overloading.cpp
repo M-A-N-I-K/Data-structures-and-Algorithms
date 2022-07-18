@@ -90,6 +90,26 @@ public:
         return *this;
     }
 
+    fraction operator++(int)
+    {
+        fraction fNew(numerator, denominator);
+        numerator = numerator + denominator;
+        simplify();
+        return fNew;
+    }
+
+    fraction &operator+=(fraction const &f)
+    {
+        int lcm = denominator * f.denominator;
+        int x = lcm / denominator;
+        int y = lcm / f.denominator;
+        int num = x * numerator + (y * f.numerator);
+        numerator = num;
+        denominator = lcm;
+        simplify();
+        return *this;
+    }
+
     void print() const
     {
         cout << numerator << " / " << denominator << endl;
@@ -100,22 +120,26 @@ int main()
     fraction f1(10, 2);
     fraction f2(15, 4);
 
-    fraction f3 = f1 * f2;
-    fraction f4 = f1 + f2;
-    f3.print();
-    f4.print();
+    // fraction f3 = f1 * f2;
+    // fraction f4 = f1 + f2;
+    // f3.print();
+    // f4.print();
 
-    if (f3 == f4)
-    {
-        cout << "Equal" << endl;
-    }
-    else
-    {
-        cout << "Not Equal" << endl;
-    }
+    // if (f3 == f4)
+    // {
+    //     cout << "Equal" << endl;
+    // }
+    // else
+    // {
+    //     cout << "Not Equal" << endl;
+    // }
 
-    fraction f5 = ++(++f1);
+    // fraction f5 = ++(++f1);
+    // f1.print();
+    // f5.print();
+
+    (f1 += f2) += f2;
     f1.print();
-    f5.print();
+    f2.print();
     return 0;
 }
