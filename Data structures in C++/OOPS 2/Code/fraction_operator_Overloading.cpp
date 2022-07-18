@@ -52,7 +52,7 @@ public:
         denominator = denominator / gcd;
     }
 
-    fraction operator+(fraction const &f)
+    fraction operator+(fraction const &f) const
     {
         int lcm = denominator * f.denominator;
         int x = lcm / denominator;
@@ -63,7 +63,7 @@ public:
         return fNew;
     }
 
-    fraction operator*(fraction const &f1)
+    fraction operator*(fraction const &f1) const
     {
         int n = numerator * f1.numerator;
         int d = denominator * f1.denominator;
@@ -71,7 +71,7 @@ public:
         fNew.simplify();
         return fNew;
     }
-    bool operator==(fraction const &f1)
+    bool operator==(fraction const &f1) const
     {
         if (numerator == f1.numerator && denominator == f1.denominator)
         {
@@ -81,6 +81,13 @@ public:
         {
             return false;
         }
+    }
+    // Pre-increment
+    fraction &operator++()
+    {
+        numerator = numerator + denominator;
+        simplify();
+        return *this;
     }
 
     void print() const
@@ -106,5 +113,9 @@ int main()
     {
         cout << "Not Equal" << endl;
     }
+
+    fraction f5 = ++(++f1);
+    f1.print();
+    f5.print();
     return 0;
 }
