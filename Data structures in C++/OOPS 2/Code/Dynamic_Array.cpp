@@ -15,6 +15,30 @@ public:
         capacity = 5;
     }
 
+    dynamicArray(dynamicArray const &d)
+    {
+        // Shallow Copy
+        // data = d.data;
+
+        data = new int[d.capacity];
+        for (int i = 0; i < d.nextIndex; i++)
+        {
+            data[i] = d.data[i];
+        }
+        nextIndex = d.nextIndex;
+        capacity = d.capacity;
+    }
+    void operator=(dynamicArray const &d)
+    {
+        data = new int[d.capacity];
+        for (int i = 0; i < d.nextIndex; i++)
+        {
+            data[i] = d.data[i];
+        }
+        nextIndex = d.nextIndex;
+        capacity = d.capacity;
+    }
+
     void add(int element)
     {
         if (nextIndex == capacity)
@@ -32,7 +56,7 @@ public:
         nextIndex++;
     }
 
-    int get(int i)
+    int get(int i) const
     {
         if (i < nextIndex)
         {
@@ -61,7 +85,7 @@ public:
         }
     }
 
-    void print()
+    void print() const
     {
         for (int i = 0; i < nextIndex; i++)
         {
