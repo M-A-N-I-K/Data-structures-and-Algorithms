@@ -1,0 +1,1 @@
+pairStar(input + 1);
