@@ -48,6 +48,8 @@ a c
 #include <iostream>
 using namespace std;
 
+// Time complexity : O(2^N)
+// Space complexity : O(2^N)
 void towerOfHanoi(int n, char source, char auxiliary, char destination)
 {
     if (n == 0)
