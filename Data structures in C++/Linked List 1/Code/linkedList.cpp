@@ -33,7 +33,16 @@ int main()
     Node second(20);
     first.next = &second;
 
+    /*
+    // Dynamically
+    Node *n1 = new Node(10);
+    Node *head = n1;
+    Node *n2 = new Node(20);
+    n1->next = n2;
+    */
+
     // cout << first.data << " " << second.data << endl;
+    print(head);
     print(head);
     return 0;
 }
