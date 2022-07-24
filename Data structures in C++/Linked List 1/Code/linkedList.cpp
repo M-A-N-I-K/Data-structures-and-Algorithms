@@ -39,6 +39,31 @@ Node *takeInput()
     return head;
 }
 
+Node *insertNode(Node *head, int pos, int data)
+{
+    Node *p = new Node(data);
+    if (pos == 0)
+    {
+        p->next = head;
+        head = p;
+        return head;
+    }
+    Node *temp = head;
+    int i = 0;
+    while (temp != NULL && i != pos - 1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    if (temp != NULL)
+    {
+
+        p->next = temp->next;
+        temp->next = p;
+    }
+    return head;
+}
+
 void print(Node *head)
 {
     Node *temp = head;
@@ -68,6 +93,9 @@ int main()
     // print(head);
 
     Node *head = takeInput();
+    int pos, data;
+    cin >> pos >> data;
+    head = insertNode(head, pos, data);
     print(head);
     return 0;
 }
