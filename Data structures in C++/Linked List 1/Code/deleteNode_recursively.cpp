@@ -100,18 +100,12 @@ Node *deleteNodeRec(Node *head, int pos)
     {
         return head;
     }
-    if (head->next == NULL && pos == 0)
-    {
-        Node *temp = head;
-        head = NULL;
-        delete temp;
-        return head;
-    }
     if (pos == 0)
     {
         Node *temp = head;
         head = head->next;
         delete temp;
+        return head;
     }
     Node *newHead = deleteNodeRec(head->next, pos - 1);
     head->next = newHead;
