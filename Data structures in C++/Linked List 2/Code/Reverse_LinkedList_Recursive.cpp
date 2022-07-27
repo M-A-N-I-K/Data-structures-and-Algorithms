@@ -64,6 +64,36 @@ public:
     }
 };
 
+class Pair
+{
+public:
+    Node *head;
+    Node *tail;
+};
+
+Pair reverseLinkedList(Node *head)
+{
+    if (head == NULL || head->next == NULL)
+    {
+        Pair p;
+        p.head = head;
+        p.tail = head;
+        return p;
+    }
+    Pair newHead = reverseLinkedList(head->next);
+    newHead.tail->next = head;
+    head->next = NULL;
+    Pair ans;
+    ans.tail = head;
+    ans.head = newHead.head;
+    return ans;
+}
+
+Node *reverseLinkedListBetter(Node *head)
+{
+    return reverseLinkedList(head).head;
+}
+
 Node *reverseLinkedListRec(Node *head)
 {
     if (head == NULL)
@@ -127,7 +157,8 @@ int main()
     while (t--)
     {
         Node *head = takeinput();
-        head = reverseLinkedListRec(head);
+        // head = reverseLinkedListRec(head);
+        head = reverseLinkedListBetter(head);
         print(head);
     }
 
