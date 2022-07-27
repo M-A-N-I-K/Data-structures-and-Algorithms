@@ -71,7 +71,25 @@ public:
     Node *tail;
 };
 
-Pair reverseLinkedList(Node *head)
+Node *reverseLinkedList3(Node *head)
+{
+    if (head == NULL)
+    {
+        return head;
+    }
+    else if (head->next == NULL)
+    {
+        return head;
+    }
+    Node *newHead = reverseLinkedList3(head->next);
+    Node *tail = head->next;
+    tail->next = head;
+    head->next = NULL;
+    return newHead;
+}
+
+// Time complexity : O(N)
+Pair reverseLinkedList2(Node *head)
 {
     if (head == NULL || head->next == NULL)
     {
@@ -80,7 +98,7 @@ Pair reverseLinkedList(Node *head)
         p.tail = head;
         return p;
     }
-    Pair newHead = reverseLinkedList(head->next);
+    Pair newHead = reverseLinkedList2(head->next);
     newHead.tail->next = head;
     head->next = NULL;
     Pair ans;
@@ -91,9 +109,10 @@ Pair reverseLinkedList(Node *head)
 
 Node *reverseLinkedListBetter(Node *head)
 {
-    return reverseLinkedList(head).head;
+    return reverseLinkedList2(head).head;
 }
 
+// Time complexity : O(N^2)
 Node *reverseLinkedListRec(Node *head)
 {
     if (head == NULL)
@@ -158,7 +177,8 @@ int main()
     {
         Node *head = takeinput();
         // head = reverseLinkedListRec(head);
-        head = reverseLinkedListBetter(head);
+        // head = reverseLinkedListBetter(head);
+        head = reverseLinkedList3(head);
         print(head);
     }
 
