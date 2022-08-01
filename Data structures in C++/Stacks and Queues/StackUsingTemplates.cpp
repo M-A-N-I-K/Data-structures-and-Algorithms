@@ -51,7 +51,7 @@ public:
         if (isEmpty())
         {
             cout << "Stack Underflow" << endl;
-            return INT_MIN;
+            return 0;
         }
         nextIndex--;
         return arr[nextIndex];
@@ -61,7 +61,7 @@ public:
         if (isEmpty())
         {
             cout << "Stack Underflow" << endl;
-            return INT_MIN;
+            return 0;
         }
         return arr[nextIndex - 1];
     }
