@@ -11,6 +11,13 @@ public:
     {
         this->data = data;
     }
+    ~TreeNode()
+    {
+        for (int i = 0; i < children.size(); i++)
+        {
+            delete children[i];
+        }
+    }
 };
 
 TreeNode<int> *takeInput()
@@ -48,6 +55,15 @@ void printTreeNodes(TreeNode<int> *root)
     }
 }
 
+void deleteTree(TreeNode<int> *root)
+{
+    for (int i = 0; i < root->children.size(); i++)
+    {
+        deleteTree(root->children[i]);
+    }
+    delete root;
+}
+
 int main()
 {
     /*
@@ -60,5 +76,6 @@ int main()
     */
     TreeNode<int> *root = takeInput();
     printTreeNodes(root);
+    delete root;
     return 0;
 }
