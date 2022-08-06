@@ -60,12 +60,25 @@ void printTreeNodes(TreeNode<int> *root)
     }
 }
 
-int countNodes(TreeNode<int> *root)
+void printAtLevelK(TreeNode<int> *root, int k)
 {
     if (root == NULL)
     {
-        return 0;
+        return;
     }
+    if (k == 0)
+    {
+        cout << root->data << endl;
+        return;
+    }
+    for (int i = 0; i < root->children.size(); i++)
+    {
+        printAtLevelK(root->children[i], k - 1);
+    }
+}
+
+int countNodes(TreeNode<int> *root)
+{
     int ans = 1;
     for (int i = 0; i < root->children.size(); i++)
     {
@@ -77,7 +90,6 @@ int countNodes(TreeNode<int> *root)
 int main()
 {
     TreeNode<int> *root = takeInputLevelwise();
-    printTreeNodes(root);
-    cout << countNodes(root) << endl;
+    printAtLevelK(root, 2);
     return 0;
 }

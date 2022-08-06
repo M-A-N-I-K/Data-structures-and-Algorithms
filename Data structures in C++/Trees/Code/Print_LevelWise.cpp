@@ -57,6 +57,10 @@ public:
 
 void printLevelWise(TreeNode<int> *root)
 {
+    if (root == NULL)
+    {
+        return;
+    }
     queue<TreeNode<int> *> treeNodesQueue;
     treeNodesQueue.push(root);
     while (treeNodesQueue.size() != 0)
