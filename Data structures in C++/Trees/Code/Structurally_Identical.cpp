@@ -69,7 +69,6 @@ bool areIdentical(TreeNode<int> *root1, TreeNode<int> *root2)
     {
         return false;
     }
-    bool ans = true;
     if (root1->children.size() == root2->children.size())
     {
         for (int i = 0; i < root1->children.size(); i++)
@@ -81,7 +80,7 @@ bool areIdentical(TreeNode<int> *root1, TreeNode<int> *root2)
     {
         return false;
     }
-    return ans;
+    return true;
 }
 
 TreeNode<int> *takeInputLevelWise()
