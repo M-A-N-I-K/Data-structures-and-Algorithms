@@ -57,6 +57,44 @@ BinaryTreeNode<int> *takeInput()
     return root;
 }
 
+BinaryTreeNode<int> *takeInputLevelWise()
+{
+    int rootData;
+    cout << "Enter root Data :" << endl;
+    cin >> rootData;
+    if (rootData == -1)
+    {
+        return NULL;
+    }
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(rootData);
+    queue<BinaryTreeNode<int> *> pendingNodes;
+    pendingNodes.push(root);
+    while (pendingNodes.size() != 0)
+    {
+        BinaryTreeNode<int> *front = pendingNodes.front();
+        pendingNodes.pop();
+        cout << "Enter left child of " << front->data << endl;
+        int leftChildData;
+        cin >> leftChildData;
+        if (leftChildData != -1)
+        {
+            BinaryTreeNode<int> *leftChild = new BinaryTreeNode<int>(leftChildData);
+            front->left = leftChild;
+            pendingNodes.push(leftChild);
+        }
+        cout << "Enter right child of " << front->data << endl;
+        int rightChildData;
+        cin >> rightChildData;
+        if (rightChildData != -1)
+        {
+            BinaryTreeNode<int> *rightChild = new BinaryTreeNode<int>(rightChildData);
+            front->right = rightChild;
+            pendingNodes.push(rightChild);
+        }
+    }
+    return root;
+}
+
 void printLevelWise(BinaryTreeNode<int> *root)
 {
     queue<BinaryTreeNode<int> *> pendingNodes;
@@ -88,6 +126,23 @@ void printLevelWise(BinaryTreeNode<int> *root)
     }
 }
 
+pair<int, int> diameterBinaryTree(BinaryTreeNode<int> *root)
+{
+    if (root == NULL)
+    {
+        pair<int, int> p;
+        p.first = 0;
+        p.second = 0;
+        return p;
+    }
+    pair<int, int> ans;
+    pair<int, int> ans1 = diameterBinaryTree(root->left);
+    pair<int, int> ans2 = diameterBinaryTree(root->right);
+    ans.second = 1 + max(ans1.second, ans2.second);
+    ans.first = max(ans1.second + ans2.second, max(ans1.first, ans2.first));
+    return ans;
+}
+/*
 int height(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
@@ -96,18 +151,23 @@ int height(BinaryTreeNode<int> *root)
     }
     return 1 + max(height(root->left), height(root->right));
 }
-
+// Time Complexity : O(N * H) where h is height of tree;
 int diameterBinaryTree(BinaryTreeNode<int> *root)
 {
+    if(root == NULL){
+        return 0;
+    }
     int leftRightHeight = height(root->left) + height(root->right);
     int leftHeight = diameterBinaryTree(root->left);
     int rightHeight = diameterBinaryTree(root->right);
     return max(leftRightHeight, max(leftHeight, rightHeight));
 }
-
+*/
 int main()
 {
-    BinaryTreeNode<int> *root = takeInput();
-    cout << diameterBinaryTree(root) << endl;
+    BinaryTreeNode<int> *root = takeInputLevelWise();
+    pair<int, int> ans = diameterBinaryTree(root);
+    cout << ans.first << endl;
+    cout << ans.second << endl;
     printLevelWise(root);
 }
