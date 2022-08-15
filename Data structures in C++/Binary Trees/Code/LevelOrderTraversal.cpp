@@ -106,7 +106,11 @@ BinaryTreeNode<int> *takeInput()
     }
     return root;
 }
-
+/*
+Time complexity : O(N)
+Space complexity : O(N)
+Where N is number of nodes in input tree
+*/
 void printLevelWise(BinaryTreeNode<int> *root)
 {
     if (root == NULL)

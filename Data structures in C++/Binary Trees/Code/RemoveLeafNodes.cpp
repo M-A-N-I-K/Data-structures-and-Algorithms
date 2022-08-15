@@ -115,7 +115,12 @@ void printLevelATNewLine(BinaryTreeNode<int> *root)
         }
     }
 }
-
+/*
+Time complexity : O(N)
+Space complexity : O(h)
+Where N is number of nodes in input tree
+Where h is height of input tree
+*/
 BinaryTreeNode<int> *removeLeafNodes(BinaryTreeNode<int> *root)
 {
     if (root == NULL)

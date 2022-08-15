@@ -101,7 +101,12 @@ BinaryTreeNode<int> *takeInput()
     }
     return root;
 }
-
+/*
+Time complexity : O(N)
+Space complexity : O(h)
+Where N is number of nodes in input tree
+Where h is height of input tree
+*/
 int getSum(BinaryTreeNode<int> *root)
 {
     if (root == NULL)

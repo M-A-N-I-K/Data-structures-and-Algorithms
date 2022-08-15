@@ -98,7 +98,12 @@ BinaryTreeNode<int> *takeInput()
     }
     return root;
 }
-
+/*
+Time complexity : O(N)
+Space complexity : O(H)
+Where N is number of nodes in input tree
+Where H is height of input tree
+*/
 void printNodesWithoutSibling(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
