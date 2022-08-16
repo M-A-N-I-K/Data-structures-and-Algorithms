@@ -87,13 +87,32 @@ void elementsInRangeK1K2(BinaryTreeNode<int> *root, int k1, int k2)
     {
         return;
     }
-    elementsInRangeK1K2(root->left, k1, k2);
-    if (root->data >= k1 && root->data <= k2)
+    if (root->data > k2)
     {
-        cout << root->data << " ";
+        elementsInRangeK1K2(root->left, k1, k2);
+        if (root->data >= k1 && root->data <= k2)
+        {
+            cout << root->data << " ";
+        }
     }
+    else if (root->data < k1)
+    {
+        if (root->data >= k1 && root->data <= k2)
+        {
+            cout << root->data << " ";
+        }
+        elementsInRangeK1K2(root->right, k1, k2);
+    }
+    else
+    {
+        elementsInRangeK1K2(root->left, k1, k2);
+        if (root->data >= k1 && root->data <= k2)
+        {
+            cout << root->data << " ";
+        }
 
-    elementsInRangeK1K2(root->right, k1, k2);
+        elementsInRangeK1K2(root->right, k1, k2);
+    }
 }
 
 int main()
