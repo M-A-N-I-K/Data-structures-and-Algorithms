@@ -116,7 +116,7 @@ bool isBST(BinaryTreeNode<int> *root)
     return (root->data > leftMax) && (root->data <= rightMin) && isBST(root->left) && isBST(root->right);
 }
 */
-pair<pair<int, int>, bool> isBSTHelper(BinaryTreeNode<int> *root)
+pair<pair<int, int>, bool> isBST2Helper(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
     {
@@ -126,8 +126,8 @@ pair<pair<int, int>, bool> isBSTHelper(BinaryTreeNode<int> *root)
         p.second = true;
         return p;
     }
-    pair<pair<int, int>, bool> leftMax = isBSTHelper(root->left);
-    pair<pair<int, int>, bool> rightMin = isBSTHelper(root->right);
+    pair<pair<int, int>, bool> leftMax = isBST2Helper(root->left);
+    pair<pair<int, int>, bool> rightMin = isBST2Helper(root->right);
     int minimum = min(root->data, min(leftMax.first.first, rightMin.first.first));
     int maximum = max(root->data, max(leftMax.first.second, rightMin.first.second));
     bool isBSTAns = leftMax.second && rightMin.second && (root->data > leftMax.first.second) && (root->data <= rightMin.first.first);
@@ -138,14 +138,30 @@ pair<pair<int, int>, bool> isBSTHelper(BinaryTreeNode<int> *root)
     return ans;
 }
 
-bool isBST(BinaryTreeNode<int> *root)
+bool isBST2(BinaryTreeNode<int> *root)
 {
-    pair<pair<int, int>, bool> ans = isBSTHelper(root);
+    pair<pair<int, int>, bool> ans = isBST2Helper(root);
     return ans.second;
+}
+
+bool isBST3(BinaryTreeNode<int> *root, int min = INT_MIN, int max = INT_MAX)
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+    if (root->data > max || root->data < min)
+    {
+        return false;
+    }
+    bool isLeftOK = isBST3(root->left, min, root->data - 1);
+    bool isRightOK = isBST3(root->right, root->data, max);
+    return isLeftOK && isRightOK;
 }
 
 int main()
 {
     BinaryTreeNode<int> *root = takeInput();
-    cout << (isBST(root) ? "true" : "false");
+    cout << (isBST3(root) ? "true" : "false");
+    cout << (isBST2(root) ? "true" : "false");
 }
