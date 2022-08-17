@@ -88,6 +88,7 @@ BinaryTreeNode<int> *takeInput()
     }
     return root;
 }
+/*
 int maximum(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
@@ -113,6 +114,34 @@ bool isBST(BinaryTreeNode<int> *root)
     int leftMax = maximum(root->left);
     int rightMin = minimum(root->right);
     return (root->data > leftMax) && (root->data <= rightMin) && isBST(root->left) && isBST(root->right);
+}
+*/
+pair<pair<int, int>, bool> isBSTHelper(BinaryTreeNode<int> *root)
+{
+    if (root == NULL)
+    {
+        pair<pair<int, int>, bool> p;
+        p.first.first = INT_MAX;
+        p.first.second = INT_MIN;
+        p.second = true;
+        return p;
+    }
+    pair<pair<int, int>, bool> leftMax = isBSTHelper(root->left);
+    pair<pair<int, int>, bool> rightMin = isBSTHelper(root->right);
+    int minimum = min(root->data, min(leftMax.first.first, rightMin.first.first));
+    int maximum = max(root->data, max(leftMax.first.second, rightMin.first.second));
+    bool isBSTAns = leftMax.second && rightMin.second && (root->data > leftMax.first.second) && (root->data <= rightMin.first.first);
+    pair<pair<int, int>, bool> ans;
+    ans.first.first = minimum;
+    ans.first.second = maximum;
+    ans.second = isBSTAns;
+    return ans;
+}
+
+bool isBST(BinaryTreeNode<int> *root)
+{
+    pair<pair<int, int>, bool> ans = isBSTHelper(root);
+    return ans.second;
 }
 
 int main()
