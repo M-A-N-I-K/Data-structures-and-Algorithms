@@ -94,15 +94,6 @@ private:
         }
     }
 
-    int minimum(BinaryTreeNode<int> *root)
-    {
-        if (root == NULL)
-        {
-            return INT_MAX;
-        }
-        return min(root->data, min(minimum(root->left), minimum(root->right)));
-    }
-
     BinaryTreeNode<int> *deleteDataHelper(int data, BinaryTreeNode<int> *root)
     {
         if (root == NULL)
@@ -128,15 +119,26 @@ private:
             }
             else if (root->left == NULL)
             {
-                return root->right;
+                BinaryTreeNode<int> *temp = root->right;
+                root->right = NULL;
+                delete root;
+                return temp;
             }
             else if (root->right == NULL)
             {
-                return root->left;
+                BinaryTreeNode<int> *temp = root->left;
+                root->left = NULL;
+                delete root;
+                return temp;
             }
             else
             {
-                int minData = minimum(root->right);
+                BinaryTreeNode<int> *node = root->right;
+                while (node->left != NULL)
+                {
+                    node = node->left;
+                }
+                int minData = node->data;
                 root->data = minData;
                 BinaryTreeNode<int> *ans = deleteDataHelper(minData, root->right);
                 root->right = ans;
