@@ -1,5 +1,5 @@
 /*
-Given a binary tree and data of two nodes, find 'LCA' (Lowest Common Ancestor) of the given two nodes in the binary tree.
+Given a binary search tree and data of two nodes, find 'LCA' (Lowest Common Ancestor) of the given two nodes in the BST.
 LCA
 
 LCA of two nodes A and B is the lowest or deepest node which has both A and B as its descendants.
@@ -20,11 +20,12 @@ Note:
 
 1. If out of 2 nodes only one node is present, return that node.
 2. If both are not present, return -1.
+3. all the node data will be unique.
 
 Input format:
 
 The first line of input contains data of the nodes of the tree in level order form. The data of the nodes of the tree is separated by space. If any node does not have left or right child, take -1 in its place. Since -1 is used as an indication whether the left or right nodes exist, therefore, it will not be a part of the data of any node.
-The following line of input contains two integers, denoting the value of data of two nodes of given binary tree.
+The following line of input contains two integers, denoting the value of data of two nodes of given BST.
 
 Output Format:
 
@@ -36,16 +37,16 @@ Time Limit: 1 second
 
 Sample Input 1:
 
-5 10 6 2 3 -1 -1 -1 -1 -1 9 -1 -1
+8 5 10 2 6 -1 -1 -1 -1 -1 7 -1 -1
 2 10
 
 Sample Output 1:
 
-10
+8
 
 Sample Input 2:
 
-5 10 6 2 3 -1 -1 -1 -1 -1 9 -1 -1
+8 5 10 2 6 -1 -1 -1 -1 -1 7 -1 -1
 2 6
 
 Sample Output 2:
@@ -54,13 +55,12 @@ Sample Output 2:
 
 Sample Input 3:
 
-5 10 6 2 3 -1 -1 -1 -1 -1 9 -1 -1
+8 5 10 2 6 -1 -1 -1 -1 -1 7 -1 -1
 12 78
 
 Sample Output 3:
 
 -1
-
 */
 #include <iostream>
 #include <queue>
@@ -79,6 +79,13 @@ public:
         left = NULL;
         right = NULL;
     }
+    ~BinaryTreeNode()
+    {
+        if (left)
+            delete left;
+        if (right)
+            delete right;
+    }
 };
 
 using namespace std;
@@ -86,6 +93,7 @@ using namespace std;
 BinaryTreeNode<int> *takeInput()
 {
     int rootData;
+
     cin >> rootData;
     if (rootData == -1)
     {
@@ -117,36 +125,48 @@ BinaryTreeNode<int> *takeInput()
             q.push(rightNode);
         }
     }
+
     return root;
 }
 
-int getLCA(BinaryTreeNode<int> *root, int a, int b)
+int getLCA(BinaryTreeNode<int> *root, int val1, int val2)
 {
     if (root == NULL)
     {
         return -1;
     }
-    if (root->data == a || root->data == b)
+    if (root->data == val1 || root->data == val2)
     {
         return root->data;
     }
-    int leftAns = getLCA(root->left, a, b);
-    int rightAns = getLCA(root->right, a, b);
-    if (leftAns == -1 && rightAns == -1)
+    if (val1 < root->data && val2 < root->data)
     {
-        return -1;
+        return getLCA(root->left, val1, val2);
     }
-    else if (leftAns == -1)
+    else if (val2 > root->data && val1 > root->data)
     {
-        return rightAns;
-    }
-    else if (rightAns == -1)
-    {
-        return leftAns;
+        return getLCA(root->right, val1, val2);
     }
     else
     {
-        return root->data;
+        int leftAns = getLCA(root->left, val1, val2);
+        int rightAns = getLCA(root->right, val1, val2);
+        if (leftAns == -1 && rightAns == -1)
+        {
+            return -1;
+        }
+        else if (leftAns == -1)
+        {
+            return rightAns;
+        }
+        else if (rightAns == -1)
+        {
+            return leftAns;
+        }
+        else
+        {
+            return root->data;
+        }
     }
 }
 
