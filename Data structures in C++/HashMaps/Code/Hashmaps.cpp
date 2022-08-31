@@ -26,4 +26,13 @@ int main()
     {
         cout << "ghi is present" << endl;
     }
+
+    // Erase
+    ourMap.erase("ghi");
+    if (ourMap.count("ghi") > 0)
+    {
+        cout << "ghi is present" << endl;
+    }
+
+    cout << "Size : " << ourMap.size() << endl;
 }
