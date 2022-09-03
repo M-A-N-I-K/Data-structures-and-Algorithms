@@ -1,9 +1,8 @@
 {
-    "files.associations": {
-        "vector": "cpp",
-        "iostream": "cpp"
-    },
-    "json.schemas": [
-    
-    ]
+  "files.associations": {
+    "vector": "cpp",
+    "iostream": "cpp",
+    "xstring": "cpp"
+  },
+  "json.schemas": []
 }
