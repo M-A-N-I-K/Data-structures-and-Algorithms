@@ -6,7 +6,15 @@ class TrieNode
 {
 public:
     char data;
-    vector<TrieNode *> children;
+    TrieNode **children;
+    bool isTerminal;
+
+    TrieNode(char data)
+    {
+        this->data = data;
+        children = new TrieNode *[26];
+        isTerminal = false;
+    }
 };
 
 int main()
