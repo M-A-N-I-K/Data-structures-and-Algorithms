@@ -55,6 +55,7 @@ Step 3 : n = 2 / 2 = 1
 #include <climits>
 using namespace std;
 
+// Brute Force Approach
 int countMinStepsToOne(int n)
 {
     if (n == 1)
@@ -76,6 +77,46 @@ int countMinStepsToOne(int n)
     }
     return 1 + min(ans1, min(ans2, ans3));
 }
+
+// Using Memoization
+int countStepsHelper(int *ans, int n)
+{
+    if (n <= 1)
+    {
+        return 0;
+    }
+    if (ans[n] != -1)
+    {
+        return ans[n];
+    }
+    int ans1 = INT_MAX;
+    int ans2 = INT_MAX;
+    int ans3 = INT_MAX;
+    ans1 = countStepsHelper(ans, n - 1);
+
+    if (n % 2 == 0)
+    {
+        ans2 = countStepsHelper(ans, n / 2);
+    }
+    if (n % 3 == 0)
+    {
+        ans3 = countStepsHelper(ans, n / 3);
+    }
+    ans[n] = 1 + min(ans1, min(ans2, ans3));
+    return ans[n];
+}
+
+int countStepsToOne2(int n)
+{
+    int *ans = new int[n + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        ans[i] = -1;
+    }
+    return countStepsHelper(ans, n);
+}
+
+// Dynamic Programming
 
 int main()
 {
