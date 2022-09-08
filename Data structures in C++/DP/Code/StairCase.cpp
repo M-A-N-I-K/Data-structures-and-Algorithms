@@ -65,7 +65,9 @@ long stairCase(int n)
         arr[i] = arr[i - 1] + arr[i - 2] + arr[i - 3];
         arr[i] %= 1000000007;
     }
-    return arr[n] % 1000000007;
+    int ans = arr[n];
+    delete[] arr;
+    return ans % 1000000007;
 }
 
 int main()

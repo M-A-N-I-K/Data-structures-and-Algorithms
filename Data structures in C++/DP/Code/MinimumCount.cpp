@@ -107,7 +107,9 @@ int minCountHelper(int n, int *arr)
             arr[n] = ans;
         }
     }
-    return arr[n];
+    int res = arr[n];
+    delete[] arr;
+    return res;
 }
 
 int minCount2(int n)
@@ -120,9 +122,42 @@ int minCount2(int n)
     return minCountHelper(n, ans);
 }
 
+// Dynamic Programming Approach
+int minCount3(int n)
+{
+    if (n <= 3)
+    {
+        return n;
+    }
+    int *ans = new int[n + 1];
+    ans[0] = 0;
+    ans[1] = 1;
+    ans[2] = 2;
+    ans[3] = 3;
+    for (int i = 4; i <= n; i++)
+    {
+        ans[i] = i;
+        for (int j = 1; j <= ceil(sqrt(i)); j++)
+        {
+            int k = j * j;
+            if (k > i)
+            {
+                break;
+            }
+            else
+            {
+                ans[i] = min(ans[i], ans[i - k] + 1);
+            }
+        }
+    }
+    int res = ans[n];
+    delete[] ans;
+    return res;
+}
+
 int main()
 {
     int n;
     cin >> n;
-    cout << minCount2(n);
+    cout << minCount3(n);
 }
