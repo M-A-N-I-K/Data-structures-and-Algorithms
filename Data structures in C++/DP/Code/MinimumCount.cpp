@@ -78,9 +78,51 @@ int minCount(int n)
     return ans;
 }
 
+// Memoization
+int minCountHelper(int n, int *arr)
+{
+    if (sqrt(n) - floor(sqrt(n)) == 0)
+    {
+        return 1;
+    }
+    if (n <= 3)
+    {
+        return n;
+    }
+    if (arr[n] != -1)
+    {
+        return arr[n];
+    }
+    int ans = n;
+    for (int i = 1; i <= n; i++)
+    {
+        int k = i * i;
+        if (k > n)
+        {
+            break;
+        }
+        else
+        {
+            ans = min(minCountHelper(n - k, arr) + 1, ans);
+            arr[n] = ans;
+        }
+    }
+    return arr[n];
+}
+
+int minCount2(int n)
+{
+    int *ans = new int[n + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        ans[i] = -1;
+    }
+    return minCountHelper(n, ans);
+}
+
 int main()
 {
     int n;
     cin >> n;
-    cout << minCount(n);
+    cout << minCount2(n);
 }
