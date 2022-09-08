@@ -80,9 +80,33 @@ long balancedBTs2(int n)
     return balancedBTsHelper(n, arr);
 }
 
+// Dynamic Programming Approach
+long balancedBTs3(int n)
+{
+    if (n <= 1)
+    {
+        return 1;
+    }
+    long *arr = new long[n + 1];
+    arr[0] = 1;
+    arr[1] = 1;
+    for (int i = 2; i <= n; i++)
+    {
+        long mod = (long)(pow(10, 9)) + 7;
+        long ans1 = arr[i - 1];
+        long ans2 = arr[i - 2];
+        long temp1 = (ans1 * ans1) % mod;
+        long temp2 = (2 * ans1 * ans2) % mod;
+        arr[i] = (temp1 + temp2) % mod;
+    }
+    long ans = arr[n];
+    delete[] arr;
+    return ans;
+}
+
 int main()
 {
     int n;
     cin >> n;
-    cout << balancedBTs2(n);
+    cout << balancedBTs3(n);
 }
