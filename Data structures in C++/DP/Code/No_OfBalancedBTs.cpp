@@ -35,7 +35,7 @@ Sample Output 2:
 #include <iostream>
 #include <cmath>
 using namespace std;
-
+// Brute Force Approach
 long balancedBTs(int n)
 {
     if (n <= 1)
@@ -51,10 +51,38 @@ long balancedBTs(int n)
 
     return ans;
 }
+// Memoization
+long balancedBTsHelper(int n, long *arr)
+{
+    if (n <= 1)
+    {
+        return 1;
+    }
+    if (arr[n] != -1)
+    {
+        return arr[n];
+    }
+    long mod = (long)(pow(10, 9)) + 7;
+    long ans1 = balancedBTsHelper(n - 1, arr);
+    long ans2 = balancedBTsHelper(n - 2, arr);
+    long temp1 = (ans1 * ans1) % mod;
+    long temp2 = (2 * ans1 * ans2) % mod;
+    arr[n] = (temp1 + temp2) % mod;
+    return arr[n];
+}
+long balancedBTs2(int n)
+{
+    long *arr = new long[n + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        arr[i] = -1;
+    }
+    return balancedBTsHelper(n, arr);
+}
 
 int main()
 {
     int n;
     cin >> n;
-    cout << balancedBTs(n);
+    cout << balancedBTs2(n);
 }
