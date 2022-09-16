@@ -66,6 +66,48 @@ Sample Output 3 :
 #include <climits>
 using namespace std;
 
+int minCostPathMemoization(int **input, int m, int n, int row, int col, int **output)
+{
+    if (row == m - 1 && col == n - 1)
+    {
+        return input[row][col];
+    }
+    if (row >= m || col >= n)
+    {
+        return INT_MAX;
+    }
+    // Check if answer already exists
+    if (output[row][col] != -1)
+    {
+        return output[row][col];
+    }
+    // Recursive calls
+    int down = minCostPathMemoization(input, m, n, row + 1, col, output);
+    int rightSide = minCostPathMemoization(input, m, n, row, col + 1, output);
+    int diagonal = minCostPathMemoization(input, m, n, row + 1, col + 1, output);
+
+    // Small Calculation
+    int ans = input[row][col] + min(min(down, rightSide), diagonal);
+
+    // Save the answer for future use
+    output[row][col] = ans;
+    return ans;
+}
+
+int minCostPath(int **input, int m, int n)
+{
+    int **output = new int *[m];
+    for (int i = 0; i < m; i++)
+    {
+        output[i] = new int[n];
+        for (int j = 0; j < n; j++)
+        {
+            output[i][j] = -1;
+        }
+    }
+    return minCostPathMemoization(input, m, n, 0, 0, output);
+}
+
 int minCostPathHelper(int **input, int m, int n, int row, int col)
 {
     if (row == m - 1 && col == n - 1)
@@ -88,11 +130,12 @@ int minCostPathHelper(int **input, int m, int n, int row, int col)
     int ans = input[row][col] + min(min(down, rightSide), diagonal);
     return ans;
 }
+/*
 int minCostPath(int **input, int m, int n)
 {
     return minCostPathHelper(input, m, n, 0, 0);
 }
-
+*/
 int main()
 {
     int **arr, n, m;
