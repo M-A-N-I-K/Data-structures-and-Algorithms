@@ -66,6 +66,43 @@ Sample Output 3 :
 #include <climits>
 using namespace std;
 
+int minCostPathDP(int **input, int m, int n)
+{
+    int **output = new int *[m];
+    for (int i = 0; i < m; i++)
+    {
+        output[i] = new int[n];
+        for (int j = 0; j < n; j++)
+        {
+            output[i][j] = -1;
+        }
+    }
+    // Last Cell i.e destination
+    output[m - 1][n - 1] = input[m - 1][n - 1];
+
+    // Fill last row in right to left manner
+    for (int j = n - 2; j >= 0; j--)
+    {
+        output[m - 1][j] = output[m - 1][j + 1] + input[m - 1][j];
+    }
+
+    // Fill last column (bottom to top)
+    for (int j = m - 2; j >= 0; j--)
+    {
+        output[j][n - 1] = output[j + 1][n - 1] + input[j][n - 1];
+    }
+
+    // Fill remaining cells
+    for (int i = m - 2; i >= 0; i--)
+    {
+        for (int j = n - 2; j >= 0; j--)
+        {
+            output[i][j] = min(output[i][j + 1], min(output[i + 1][j + 1], output[i + 1][j])) + input[i][j];
+        }
+    }
+    return output[0][0];
+}
+
 int minCostPathMemoization(int **input, int m, int n, int row, int col, int **output)
 {
     if (row == m - 1 && col == n - 1)
@@ -152,5 +189,5 @@ int main()
             cin >> arr[i][j];
         }
     }
-    cout << minCostPath(arr, n, m) << endl;
+    cout << minCostPathDP(arr, n, m) << endl;
 }
