@@ -38,6 +38,49 @@ Sample Output 1 :
 #include <algorithm>
 using namespace std;
 
+// Memoization approach
+int editDistanceHelper(string s1, string s2, int **output)
+{
+    int i = s1.length(), j = s2.length();
+    if (s1.length() == 0 || s2.length() == 0)
+    {
+        return max(s1.length(), s2.length());
+    }
+    if (output[i][j] != -1)
+    {
+        return output[i][j];
+    }
+    int ans;
+    if (s1[0] == s2[0])
+    {
+        ans = editDistanceHelper(s1.substr(1), s2.substr(1), output);
+    }
+    else
+    {
+        int a = editDistanceHelper(s1.substr(1), s2, output);
+        int b = editDistanceHelper(s1, s2.substr(1), output);
+        int c = editDistanceHelper(s1.substr(1), s2.substr(1), output);
+        ans = min(a + 1, min(b + 1, c + 1));
+    }
+    output[i][j] = ans;
+    return output[s1.length()][s2.length()];
+}
+
+int editDistanceMemoization(string s1, string s2)
+{
+    int **output = new int *[s1.size() + 1];
+    for (int i = 0; i <= s1.size(); i++)
+    {
+        output[i] = new int[s2.size() + 1];
+        for (int j = 0; j <= s2.size(); j++)
+        {
+            output[i][j] = -1;
+        }
+    }
+    return editDistanceHelper(s1, s2, output);
+}
+
+// Brute force approach
 int editDistance(string s1, string s2)
 {
     if (s1.length() == 0 || s2.length() == 0)
