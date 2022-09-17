@@ -38,6 +38,42 @@ Sample Output 1 :
 #include <algorithm>
 using namespace std;
 
+int editDistanceDP(string s1, string s2)
+{
+    int m = s1.length(), n = s2.length();
+    int **output = new int *[m + 1];
+    for (int i = 0; i <= m; i++)
+    {
+        output[i] = new int[n + 1];
+    }
+    for (int i = 0; i <= n; i++)
+    {
+        output[0][i] = i;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        output[i][0] = i;
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            if (s1[m - i] == s2[n - j])
+            {
+                output[i][j] = output[i - 1][j - 1];
+            }
+            else
+            {
+                int a = output[i - 1][j];
+                int b = output[i][j - 1];
+                int c = output[i - 1][j - 1];
+                output[i][j] = min(a, min(b, c)) + 1;
+            }
+        }
+    }
+    return output[m][n];
+}
+
 // Memoization approach
 int editDistanceHelper(string s1, string s2, int **output)
 {
@@ -68,11 +104,11 @@ int editDistanceHelper(string s1, string s2, int **output)
 
 int editDistanceMemoization(string s1, string s2)
 {
-    int **output = new int *[s1.size() + 1];
-    for (int i = 0; i <= s1.size(); i++)
+    int **output = new int *[s1.length() + 1];
+    for (int i = 0; i <= s1.length(); i++)
     {
-        output[i] = new int[s2.size() + 1];
-        for (int j = 0; j <= s2.size(); j++)
+        output[i] = new int[s2.length() + 1];
+        for (int j = 0; j <= s2.length(); j++)
         {
             output[i][j] = -1;
         }
@@ -85,7 +121,7 @@ int editDistance(string s1, string s2)
 {
     if (s1.length() == 0 || s2.length() == 0)
     {
-        return max(s1.size(), s2.size());
+        return max(s1.length(), s2.length());
     }
     if (s1[0] == s2[0])
     {
@@ -109,5 +145,6 @@ int main()
     cin >> s1;
     cin >> s2;
 
-    cout << editDistance(s1, s2);
+    cout << editDistance(s1, s2) << endl;
+    cout << editDistance(s1, s2) << endl;
 }
