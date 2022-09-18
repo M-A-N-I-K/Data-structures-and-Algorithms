@@ -47,7 +47,49 @@ Sample Output 2 :
 #include <iostream>
 #include <algorithm>
 using namespace std;
+// Memoization Approach
+int knapsackHelper(int *weight, int *value, int n, int maxWeight, int **arr)
+{
+    if (maxWeight == 0 || n == 0)
+    {
+        return 0;
+    }
+    if (arr[n][maxWeight] != -1)
+    {
+        return arr[n][maxWeight];
+    }
+    if (weight[0] > maxWeight)
+    {
+        arr[n][maxWeight] = knapsackHelper(weight + 1, value + 1, n - 1, maxWeight, arr);
+        return arr[n][maxWeight];
+    }
+    int a = knapsackHelper(weight + 1, value + 1, n - 1, maxWeight - weight[0], arr) + value[0];
+    int b = knapsackHelper(weight + 1, value + 1, n - 1, maxWeight, arr);
+    arr[n][maxWeight] = max(a, b);
+    return arr[n][maxWeight];
+}
 
+int knapsackMemoization(int *weight, int *value, int n, int maxWeight)
+{
+    int **arr = new int *[n + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        arr[i] = new int[maxWeight + 1];
+        for (int j = 0; j <= maxWeight; j++)
+        {
+            arr[i][j] = -1;
+        }
+    }
+    int ans = knapsackHelper(weight, value, n, maxWeight, arr);
+    for (int i = 0; i <= n; i++)
+    {
+        delete[] arr[i];
+    }
+    delete[] arr;
+    return ans;
+}
+
+// Brute Force Approach Added
 int knapsack(int *weights, int *values, int n, int maxWeight)
 {
     if (maxWeight == 0 || n == 0)
