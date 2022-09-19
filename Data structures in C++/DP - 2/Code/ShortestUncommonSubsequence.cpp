@@ -30,7 +30,61 @@ Explanation:
 */
 #include <iostream>
 #include <string>
+#include <algorithm>
+#define MAX 1056
+
 using namespace std;
+
+int solveDP(string s, string t)
+{
+    int **dp = new int *[s.length() + 1];
+    for (int i = 0; i <= s.length(); i++)
+    {
+        dp[i] = new int[t.length() + 1];
+    }
+    for (int i = 0; i <= s.length(); i++)
+    {
+        dp[i][0] = 1;
+    }
+    for (int i = 0; i <= t.length(); i++)
+    {
+        dp[0][i] = MAX;
+    }
+    for (int i = 1; i <= s.length(); i++)
+    {
+        for (int j = 1; j <= t.length(); j++)
+        {
+            char ch = s[i - 1];
+            int k;
+            for (k = j - 1; k >= 0; k--)
+            {
+                if (t[k] == ch)
+                {
+                    break;
+                }
+            }
+            if (k == -1)
+            {
+                dp[i][j] = 1;
+            }
+            else
+            {
+                dp[i][j] = min(dp[i - 1][j], dp[i - 1][k] + 1);
+            }
+        }
+    }
+    int ans = dp[s.length()][t.length()];
+    if (ans > MAX)
+    {
+        ans = -1;
+    }
+    for (int i = 0; i <= s.length(); i++)
+    {
+        delete[] dp[i];
+    }
+    delete[] dp;
+    return ans;
+}
 
 int solve(string s, string t)
 {
