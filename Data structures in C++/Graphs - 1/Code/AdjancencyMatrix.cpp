@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void print(int **edges, int n, int sv, bool *visited)
+void printDFS(int **edges, int n, int sv, bool *visited)
 {
     cout << sv << endl;
     visited[sv] = true;
@@ -50,7 +50,7 @@ int main()
         visited[i] = false;
     }
 
-    print(edges, n, 0, visited);
+    printDFS(edges, n, 0, visited);
 
     delete[] visited;
     for (int i = 0; i < n; i++)
