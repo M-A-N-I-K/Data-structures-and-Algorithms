@@ -18,9 +18,27 @@ void printDFS(int **edges, int n, int sv, bool *visited)
             {
                 continue;
             }
-            print(edges, n, i, visited);
+            printDFS(edges, n, i, visited);
         }
     }
+}
+
+void DFS(int **edges, int n)
+{
+    bool *visited = new bool[n];
+    for (int i = 0; i < n; i++)
+    {
+        visited[i] = false;
+    }
+    printDFS(edges, n, 0, visited);
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            printDFS(edges, n, i, visited);
+        }
+    }
+    delete[] visited;
 }
 
 int main()
@@ -44,15 +62,8 @@ int main()
         edges[s][f] = 1;
     }
 
-    bool *visited = new bool[n];
-    for (int i = 0; i < n; i++)
-    {
-        visited[i] = false;
-    }
+    DFS(edges, n);
 
-    printDFS(edges, n, 0, visited);
-
-    delete[] visited;
     for (int i = 0; i < n; i++)
     {
         delete[] edges[i];
