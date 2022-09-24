@@ -51,7 +51,9 @@ int maxMoneyLooted(int *arr, int n)
     {
         dp[i] = max(arr[i] + dp[i - 2], dp[i - 1]);
     }
-    return dp[n - 1];
+    int ans = dp[n - 1];
+    delete [] dp;
+    return ans;
 }
 
 int main()
