@@ -17,6 +17,8 @@ public:
 class student
 {
 public:
+    string name;
+    int age;
     void print()
     {
         cout << "Student" << endl;
@@ -25,6 +27,10 @@ public:
 
 class TA : public teacher, public student
 {
+    public:
+        void print(){
+            cout << "TA" << endl;
+        }
 };
 
 int main()
