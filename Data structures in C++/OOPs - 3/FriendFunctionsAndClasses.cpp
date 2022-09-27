@@ -20,7 +20,8 @@ protected:
 
 public:
     int z;
-    friend void bus ::print();
+    friend class bus;
+    // friend void bus ::print();
     friend void test();
 };
 
